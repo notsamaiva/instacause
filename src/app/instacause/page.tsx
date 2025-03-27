@@ -233,9 +233,44 @@ export default function Header() {
 
     return () => clearInterval(interval);
   }, [reviews.length]);
+
+  const [isLangOpen, setIsLangOpen] = useState(false);
+
+ 
+
+  const toggleLangDropdown = () => {
+    setIsLangOpen(!isLangOpen);
+  };
+
+  // Fermer les menus si on clique en dehors
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        !document.getElementById("nav-menu")?.contains(event.target as Node) &&
+        !document.getElementById("lang-menu")?.contains(event.target as Node)
+      ) {
+        setOpenDropdown(null);
+        setIsLangOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const languages = [
+    { name: "Français", flag: "/flag-france.svg" },
+    { name: "English", flag: "/flag-USA.svg" },
+    { name: "Español", flag: "/flag-spain.svg" },
+    { name: "Italiano", flag: "/flag-italy.svg" },
+    
+  ];
+
+
+
   return (
     
-<div className="overflow-hidden bg-gradient-to-b from-[#E7F9FF] to-[#FAF9F7] w-full min-h-screen">
+<div className="overflow-hidden bg-[#E7F9FF] w-full min-h-screen">
      {/* Bandeau de livraison */}
      <div className="w-full bg-[#01121E] h-[48px] flex justify-center items-center text-white text-sm">
         Livraison offerte à partir de 90€ d'achat avec le code* <strong>ENVOI</strong>
@@ -256,34 +291,73 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Menu Desktop */}
-        <div className="hidden md:flex space-x-[40px] text-[#292723] text-[14px] items-center">
-          {[
-            { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
-            { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
-            { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
-          ].map((menu, index) => (
-            <div key={index} className="relative group">
-              <button onClick={() => toggleDropdown(menu.label)} className="hover:text-[#0B99FF] flex items-center gap-2">
-                {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
-              </button>
-              <div
-                className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 z-50 transition-opacity duration-300 ${
-                  openDropdown === menu.label ? "opacity-100 visible" : "opacity-0 invisible"
-                } group-hover:opacity-100 group-hover:visible`}
-              >
+         {/* Menu Desktop */}
+      <div id="nav-menu" className="hidden md:flex space-x-[40px] items-center">
+        {[
+          { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
+          { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
+          { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
+        ].map((menu, index) => (
+          <div key={index} className="relative group">
+            <button
+              onClick={() => toggleDropdown(menu.label)}
+              className="hover:text-[#0B99FF] flex items-center gap-2"
+            >
+              {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
+            </button>
+            {openDropdown === menu.label && (
+              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 z-50">
                 {menu.links.map((link, i) => (
                   <a key={i} href="#" className="font-bold block px-4 py-2 hover:bg-gray-100">
                     {link}
                   </a>
                 ))}
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+          </div>
+        ))}
 
+        {/* Bouton Langue */}
+        <div id="lang-menu" className="relative">
+          <button
+            onClick={toggleLangDropdown}
+            className="hover:text-[#0B99FF] rounded-[12px] bg-[#FFFFFF] h-[40px] w-[160px]  flex justify-center items-center gap-2"
+          >
+            <span className="flex items-center space-x-2">
+              
+              <span>Français</span>
+              <img src="/flag-france.svg" alt="Français" className="w-5 h-5" />
+            </span>
+            {isLangOpen ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
+
+          {/* Menu Langues */}
+          {isLangOpen && (
+            <div className="absolute left-0 mt-2 w-[160px] bg-white shadow-lg rounded-md p-2 z-50">
+              {languages.map((lang, index) => (
+               <button
+               key={index}
+               className="flex items-center text-[#292723] w-full px-4 py-2 hover:bg-gray-100"
+               onClick={() => {
+                 console.log(`Langue sélectionnée : ${lang.name}`);
+                 setIsLangOpen(false);
+               }}
+             >
+               {lang.name}
+               <img src={lang.flag} alt={lang.name} className="w-5 h-5 ml-2" />
+             </button>
+             
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
         {/* Boutons */}
         <div className="hidden md:flex space-x-4 text-xs items-center">
+       
+        <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#000000] text-center">
+        Soutenir une cause
+          </button>
           <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#0B99FF] text-center">
             Créer une campagne
           </button>
@@ -328,65 +402,66 @@ export default function Header() {
       )}
     </nav>
       {/* Home  cause photo */}
+      <div className="relative w-full min-h-screen">
+  {/* Background Gradient */}
+  <div className="overflow-hidden absolute inset-0 bg-gradient-to-t from-[#FAF9F7] to-transparent w-full min-h-screen"></div>
 
-      <main
-  className="w-full pt-[50px] min-h-screen"
-  style={{
-    backgroundImage: "linear-gradient(to bottom, #E7F9FF 0%, #E7F9FF 300px, #E7F9FF 300px, #E7F9FF 100%)",
-  }}
->
-
-
-      <div className="max-w-[1232px] w-full h-full mx-auto px-4">
-  {/* Texte central */}
-  <div className="flex flex-col items-center text-center py-5">
-    <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold text-black">
-      Vos cartes postales, un écho pour <br className="hidden md:block" />
-      les causes qui comptent.
-    </h1>
-    <p className="text-black font-normal text-[12px] sm:text-[16px] md:text-[20px] lg:text-[22px] mt-4 max-w-[690px]">
-      Engagez-vous, sensibilisez, mobilisez. Envoyez des cartes <br className="hidden md:block" /> 
-      postales personnalisées pour soutenir des causes universelles <br className="hidden md:block" />
-      et faites la différence.
-    </p>
-  </div>
-
-  {/* Grille responsive */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
-    
-    {/* Carte 1 */}
-    <div className="bg-[#2D65AF] w-full max-w-[236px] md:mt-[-80] h-[287px] text-white rounded-[32px] flex flex-col justify-end p-4">
-      <Image src="/traits.svg" alt="traits" width={236} height={287} className="rounded-[32px]" />
-      <p className="mt-4 text-[14px] sm:text-[16px]">Soutenez les causes qui vous tiennent à cœur.</p>
-      <Link href="/soutenir_cause" className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold mt-4 text-center block">
-        Explorer les causes
-      </Link>
+  {/* Contenu */}
+  <div className="relative max-w-[1232px] w-full h-full mx-auto px-4">
+    {/* Texte central */}
+    <div className="flex flex-col items-center text-center py-5">
+      <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold text-black">
+        Vos cartes postales, un écho pour <br className="hidden md:block" />
+        les causes qui comptent.
+      </h1>
+      <p className="text-black font-normal text-[12px] sm:text-[16px] md:text-[20px] lg:text-[22px] mt-4 max-w-[690px]">
+        Engagez-vous, sensibilisez, mobilisez. Envoyez des cartes <br className="hidden md:block" />
+        postales personnalisées pour soutenir des causes universelles <br className="hidden md:block" />
+        et faites la différence.
+      </p>
     </div>
 
-    {/* Image 1 */}
-    <Image src="/event.jpeg" alt="Campagne" width={236} height={287} className="md:mt-220 w-full max-w-[236px] min-h-[287px] object-cover rounded-[32px]" />
+    {/* Grille responsive */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
+      
+      {/* Carte 1 */}
+      <div className="bg-[#2D65AF] w-full max-w-[236px] h-[287px] text-white mt-[-80] rounded-[32px] flex flex-col justify-end p-4">
+        <Image src="/traits.svg" alt="traits" width={236} height={287} className="rounded-[32px]" />
+        <p className="mt-4 text-[14px] sm:text-[16px]">Soutenez les causes qui vous tiennent à cœur.</p>
+        <Link href="/soutenir_cause" className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold mt-4 text-center block">
+          Explorer les causes
+        </Link>
+      </div>
 
-    {/* Carte 2 */}
-    <div className="bg-[#0B99FF] w-full max-w-[236px] md:mt-[66] h-[220px] text-white p-4 rounded-[32px] flex flex-col justify-end text-center">
-      <p className="mb-6 text-[14px] sm:text-[16px]">Engagez-vous en un clic avec InstaCause</p>
-      <Link href="/login" className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold text-center block">
-        Créer une cause
-      </Link>
+      {/* Image 1 */}
+      <Image src="/event.jpeg" alt="Campagne" width={236} height={287} className="mt-220 w-full max-w-[236px] min-h-[287px] object-cover rounded-[32px]" />
+
+      {/* Carte 2 */}
+      <div className="bg-[#0B99FF] w-full max-w-[236px] h-[220px] mt-[66] text-white p-4 rounded-[32px] flex flex-col justify-end text-center">
+        <p className="mb-6 text-[14px] sm:text-[16px]">Engagez-vous en un clic avec InstaCause</p>
+        <Link href="/login" className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold text-center block">
+          Créer une cause
+        </Link>
+      </div>
+
+      {/* Image 2 */}
+      <Image src="/cause.jpeg" alt="cause" width={236} height={287} className="mt-220 w-full max-w-[236px] min-h-[287px] object-cover rounded-[32px]" />
+
+      {/* Carte 3 */}
+      <div className="bg-[#6359F5] w-full mt-[-80] max-w-[236px] h-[287px] text-white rounded-[32px] flex flex-col justify-end p-4">
+        <p className="text-[14px] sm:text-[16px]">Quand vos mots deviennent des actes</p>
+        <button className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold mt-4">
+          Explorer l’impact
+        </button>
+      </div>
     </div>
-
-    {/* Image 2 */}
-    <Image src="/cause.jpeg" alt="cause" width={236} height={287} className="md:mt-220 w-full max-w-[236px] min-h-[287px] object-cover rounded-[32px]" />
-
-    {/* Carte 3 */}
-    <div className="bg-[#6359F5] md:mt-[-80] w-full w-[236px] h-[287px] text-white rounded-[32px] flex flex-col justify-end p-4">
-      <p className="text-[14px] sm:text-[16px]">Quand vos mots deviennent des actes</p>
-      <button className="text-white border border-white px-6 py-3 rounded-[12px] font-semibold mt-4">
-        Explorer l’impact
-      </button>
-    </div>
-
   </div>
 </div>
+
+
+      <main
+  className="w-full pt-[50px] min-h-screen bg-[#FAF9F7]">
+  
 
 <div className="flex justify-center items-center min-h-screen p-4">
   <div className="w-full max-w-[1234px] grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -448,7 +523,7 @@ export default function Header() {
 
     
        {/* Comment ça marche */}
-<div className="flex flex-col items-center px-4 md:px-8 bg-[#FAF9F7] mt-[63] mb-24">
+<div id="comment-ca-marche" className="flex flex-col items-center px-4 md:px-8 bg-[#FAF9F7] mt-[63] mb-24">
       <div className="rounded-[60px] p-8 w-full max-w-[1232px] text-center bg-gradient-to-l from-[#DFF0E4] to-[#A6D5E8]">
         <div className="w-full max-w-3xl mx-auto">
           <h2 className="text-[33px] sm:text-[33px] font-semibold mb-4 text-[#000000]">
@@ -505,8 +580,17 @@ export default function Header() {
       </div>
     
    {/* LES causes interessant*/}
+   </div>
 
- <section className="overflow-hidden relative text-center h-[756px] max-w-[1232px] mt-[-74] py-24">
+
+
+{/* 500 */}
+
+
+
+
+    </main>
+ <section className="overflow-hidden relative text-center h-[756px] mt-[-99] py-24 bg-[#FAF9F7]">
  
   
   <div className="relative w-full overflow-hidden mt-[29.06px] ">
@@ -571,14 +655,14 @@ export default function Header() {
 
 </section> 
 
-<section className="overflow-hidden relative text-center h-[756px] w-full max-w-[1232px] mt-[-74] py-14">
+<section className="overflow-hidden relative text-center bg-[#FAF9F7] h-[856px] w-full mt-[-4] py-14">
 
-  <div className="relative max-h-[768px] h-full w-full max-w-[1232px] flex flex-col items-center justify-center px-4 text-center mt-16">
+  <div className="relative max-h-[968px] h-full w-full flex flex-col items-center justify-center px-4 text-center mt-16">
     {/* Image du dégradé centrée */}
     <img
       src="/backdegrade.svg"
       alt="Dégradé"
-      className="overflow-hidden absolute md:top-[-224px] left-2/3 transform -translate-x-2/3 w-full max-w-[1676px]  max-h-[1302px]"
+      className="overflow-hidden absolute md:top-[-324px] left-2/3 transform -translate-x-2/3 w-full max-w-[1676px]  max-h-[1602px]"
     />
  
  <p className="text-[20px] sm:text-[25px] font-semibold text-[#000000]">
@@ -598,7 +682,10 @@ export default function Header() {
   </div>
 </section>
 
-<section className="overflow-hidden w-full relative text-center h-[756px] max-w-[1232px] mt-20 py-14 mx-auto">
+<div className="relative flex flex-col md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
+
+
+<section className="overflow-hidden w-full relative flex flex-col  bg-[#FAF9F7] text-center mb-12 pb-20 h-[756px] max-w-[1232px] mt-30 py-14 mx-auto">
       <h2 className="text-[#0B99FF] text-center uppercase font-bold text-[14px] tracking-wide drop-shadow-md">
         TEMOIGNAGES
       </h2>
@@ -677,9 +764,13 @@ export default function Header() {
 </button>
       </div>
     </section>
+    </div>
+    
+    <div className="relative flex flex-col mt-[-180] md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
 
-       {/*BLOCKS  Logos des partenaires */}
-    <div
+
+   {/*BLOCKS  Logos des partenaires */}
+   <div
       className="max-w-[1232px] w-full h-[120px] border-2 border-transparent bg-[#FAF9F7] relative mx-auto"
       style={{
         borderImage: 'linear-gradient(to right, #FAF9F7, #D2D2D2, #FAF9F7) 1',
@@ -696,15 +787,18 @@ export default function Header() {
       </div>
     </div>
 
+    
+ </div>
 
-     <div className="relative flex flex-col mt-[80] md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
+
+     <div className="relative flex flex-col mt-[-60] md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
     {/* Image de fond */}
     <Image
       src="/backb.svg"
       alt="decoration"
       width={800}
       height={800}
-      className="absolute top-0 left-0 hidden sm:block w-[80%] md:w-[800px] h-auto"
+      className="absolute top-0 left-0 hidden sm:block w-[80%] md:w-[1200px] h-auto"
       priority
     />
   
@@ -762,16 +856,15 @@ export default function Header() {
 
 
 
+<div className="relative flex mt-[-25] flex-col md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
 
-
-
-    <div className="max-w-[1232px] flex flex-col items-center md:mt-[-30px] mb-[60px] mx-auto">
+    <div className="bg-[#FAF9F7] max-w-[1232px] flex flex-col items-center md:mt-[-30px] mb-[60px] mx-auto">
                     <header className="text-center py-8">
-                    <h2 className="text-[#3CE481CC] text-center uppercase font-bold text-[14px] leading-none tracking-normal drop-shadow-[0px_4px_18px_#3CE481CC]">
+                    <h2 className="text-[#3CE481CC] mt-[63] text-center uppercase font-bold text-[14px] leading-none tracking-normal drop-shadow-[0px_4px_18px_#3CE481CC]">
                         TELECHARGER
                       </h2>
 
-                        <h1 className="text-[24px] font-bold text-[#292723]">
+                        <h1 className="text-[24px] mt-[33] font-bold text-[#292723]">
                             Découvrez l &#x27;application Instacard.
                         </h1>
                         <p className="text-gray-600 mt-2">L &#x27;application qui transforme vos moments en souvenirs inoubliables.</p>
@@ -805,31 +898,36 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
+                </div>
+   
+
+   
 
 
-             
-                <footer className="w-full max-w-[1232px] relative bg-[#0A131E] text-gray-300 py-10 px-6 overflow-hidden">
+    <footer className="w-full relative bg-[#0A131E] mt-[-53] text-gray-300 py-10 px-6 overflow-hidden">
                {/* Image du dégradé centrée */}
       <img
         src="/degrade.svg"
         alt="Dégradé"
         className="absolute top-[54px] left-[-494px]  transform  w-[4599px] h-[525px]"
       />
-            <div className="max-w-[1232px] max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
                 <div>
                     <img src="/Instacard.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
                     <p className="text-white text-sm">Chaque image a une histoire <br /> à raconter...</p>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-[70px] mt-6 md:mt-0">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-[70px] mt-6 md:mt-0">
                     <div>
-                        <h3 className="text-white font-semibold">Cartes postales</h3>
+                        <h3 className="text-white font-semibold">Liens utiles</h3>
                         <div className="flex flex-col space-y-1 mt-2 text-sm">
-                            <a href="#" className="hover:text-gray-400">Souvenirs</a>
-                            <a href="#" className="hover:text-gray-400">Familles</a>
-                            <a href="#" className="hover:text-gray-400">Religions</a>
-                            <a href="#" className="hover:text-gray-400">Populaires</a>
-                            <a href="#" className="hover:text-gray-400">Soutiens</a>
-                            <a href="#" className="hover:text-gray-400">Autres</a>
+                            <a href="#" className="hover:text-gray-400">Fonctionnalités cles</a>
+                            <a href="#comment-ca-marche" name="comment-ca-marche" className="hover:text-gray-400">Comment ça marche</a>
+
+                            <a href="#" className="hover:text-gray-400">Soutenir une cause</a>
+                            <a href="#" className="hover:text-gray-400">Contactez-nous</a>
+                            <a href="#" className="hover:text-gray-400">Politique de confidentialité</a>
+                            <a href="#" className="hover:text-gray-400">Conditions d’utilisation</a>
+                            <a href="#" className="hover:text-gray-400">Paramètres de cookies</a>
                         </div>
                     </div>
                     <div>
@@ -861,15 +959,7 @@ export default function Header() {
                             <a href="#" className="hover:text-gray-400">Terms</a>
                         </div>
                     </div>
-                    <div>
-                        <h3 className="text-white font-semibold">Legal</h3>
-                        <div className="flex flex-col space-y-1 mt-2 text-sm">
-                            <a href="#" className="hover:text-gray-400">Abuse</a>
-                            <a href="#" className="hover:text-gray-400">Charges</a>
-                            <a href="#" className="hover:text-gray-400">Cookies</a>
-                            <a href="#" className="hover:text-gray-400">Terms</a>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div className="flex justify-start ml-[730px] mt-8 space-x-10 text-lg">
@@ -904,24 +994,8 @@ export default function Header() {
                 </a>
             </div>
         </footer>
-   
-
-    </div>
-
-
-
-{/* 500 */}
-
-
-
-
-    </main>
-
-
 
    
-
-               
 
         
 
