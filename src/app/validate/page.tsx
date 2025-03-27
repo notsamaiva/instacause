@@ -31,7 +31,7 @@ export default function Header() {
                 ⏳ Traitement en cours...
               </h2>
               {/* Description */}
-              <p className="w-full text-center font-normal text-lg leading-6 text-[#6F7580]">
+              <p className="w-full text-center mt-[10] font-normal text-lg leading-6 text-[#6F7580]">
                 Votre paiement est en cours de validation. Restez zen, on s’en occupe ! Vous recevrez une confirmation dès que tout sera prêt.
               </p>
               {/* Image de succès */}
