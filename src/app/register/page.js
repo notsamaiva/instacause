@@ -4,6 +4,16 @@ import Image from "next/image";
 import { FaGoogle } from "react-icons/fa";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { FaChevronDown } from 'react-icons/fa';
+const countryCodes = {
+  France: "+33",
+  Tchad: "+235",
+  Belgique: "+32",
+  Canada: "+1",
+  Sénégal: "+221",
+  Maroc: "+212",
+  // Ajoute d'autres pays si nécessaire
+};
 export default function Login() {
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +24,27 @@ export default function Login() {
       setLoading(false);
       alert("Connexion réussie !");
     }, 2000);
+  };
+
+  const [selectedCountry, setSelectedCountry] = useState("France");
+  const [phoneCode, setPhoneCode] = useState(countryCodes["France"]);
+
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+    setPhoneCode(countryCodes[country]);
+  };
+  const [phoneNumber, setPhoneNumber] = useState(phoneCode);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Empêcher la suppression du préfixe
+    if (!inputValue.startsWith(phoneCode)) {
+      setPhoneNumber(phoneCode);
+    } else {
+      setPhoneNumber(inputValue);
+    }
   };
   return (
     <div className="flex min-h-screen overflow-hidden">
@@ -38,59 +69,131 @@ export default function Login() {
 
 {/* Formulaire */}
 <div className="mt-4 w-80 sm:mt-[10]">
-  {/* Champ Email */}
-  <input
-    type="email"
-    placeholder="E-mail"
-    className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-left"
-  />
+<div className="grid grid-cols-2 gap-4">
+      {/* Champ Prénom et Nom */}
+      {[
+        { id: "prenom", label: "Prénom" },
+        { id: "nom", label: "Nom de famille" },
+      ].map(({ id, label }) => (
+        <div key={id} className="relative">
+          <input
+            type="text"
+            id={id}
+            className="w-full p-2 pt-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-[12px] peer"
+            placeholder=" "
+          />
+          <label
+            htmlFor={id}
+            className="absolute left-2 top-1 text-gray-400 text-[12px] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-[12px] peer-placeholder-shown:text-gray-500 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-[#2aa6ff]"
+          >
+            {label}
+          </label>
+        </div>
+      ))}
 
-  {/* Champ Mot de passe avec l'icône "œil" */}
-  <div className="relative mt-3">
-    <input
-      type="password"
-      placeholder="Mot de passe"
+      {/* Champ Pays */}
       
-      className="w-full p-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-left"
-    />
-    <img
-      src="/images/eye.svg"
-      alt="Afficher le mot de passe"
-      className="w-5 h-5 absolute right-[130] top-1/2 transform -translate-y-1/2 cursor-pointer"
-    />
-  </div>
 
-  {/* Lien "Mot de passe oublié ?" */}
-  <div className="w-full flex justify-end mt-[-5]">
-  <a
-    href="#"
-    className="text-[#003E7C] text-xs mt-2 inline-block text-right underline"
-    style={{
-      fontWeight: '500',
-      fontSize: '12px', // Taille de la police ajustée
-      lineHeight: '20px',  // Hauteur de ligne
-      letterSpacing: '0px',  // Espacement des lettres
-      textDecoration: 'underline',  // Souligné
-      textDecorationThickness: '2px', // Épaisseur du soulignement
-    }}
+<div className="relative">
+  <select
+    id="pays"
+    className="w-full p-2 pr-10 pt-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-[12px] peer"
+    value={selectedCountry}
+    onChange={handleCountryChange}
   >
-    Mot de passe oublié ?
-  </a>
+    {Object.keys(countryCodes).map((country) => (
+      <option key={country} value={country}>
+        {country}
+      </option>
+    ))}
+  </select>
+  <label
+    htmlFor="pays"
+    className="absolute left-2 top-1 text-gray-400 text-[12px] transition-all duration-200 
+               peer-placeholder-shown:top-4 peer-placeholder-shown:text-[12px] peer-placeholder-shown:text-gray-500 
+               peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-[#2aa6ff]"
+  >
+    Pays
+  </label>
+  {/* Icône indiquant le select */}
+  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+    <FaChevronDown className="text-black w-2 h-4" />
+  </div>
 </div>
 
+
+     {/* Champ Numéro de téléphone */}
+<div className="relative">
+  <input
+    type="text"
+    id="telephone"
+    className="w-full p-2 pt-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-[12px] peer"
+    placeholder=" " // Placeholder invisible pour garder l'animation du label
+    value={phoneCode}
+    onChange={(e) => setPhoneCode(e.target.value)} // Mise à jour de l'état
+  />
+  <label
+    htmlFor="telephone"
+    className="absolute left-2 top-1 text-gray-400 text-[12px] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-[12px] peer-placeholder-shown:text-gray-500 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-[#2aa6ff]"
+  >
+    Téléphone
+  </label>
+</div>
+</div>
+
+{/* Champ Email */}
+<div className="relative mt-3">
+  <input
+    type="email"
+    id="email"
+    className="w-full p-2 pt-5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-[12px] peer"
+    placeholder=" "
+  />
+  <label
+    htmlFor="email"
+    className="absolute left-2 top-2 text-gray-400 text-[12px] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-[12px] peer-placeholder-shown:text-gray-500 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-[#2aa6ff]"
+  >
+    E-mail
+  </label>
+</div>
+
+{/* Champ Mot de passe avec l'icône "œil" */}
+<div className="relative mt-3">
+  <input
+    type="password"
+    id="password"
+    className="w-full p-2 pt-5 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2aa6ff] text-[12px] peer"
+    placeholder=" "
+  />
+  <label
+    htmlFor="password"
+    className="absolute left-2 top-2 text-gray-400 text-[12px] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-[12px] peer-placeholder-shown:text-gray-500 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-[#2aa6ff]"
+  >
+    Mot de passe
+  </label>
+  <img
+    src="/images/eye.svg"
+    alt="Afficher le mot de passe"
+    className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+  />
+</div>
+
+
+
+  
 
   {/* Bouton Connexion */}
   
   <button
       onClick={handleClick}
-      className="relative w-full bg-[#d8dbe3] text-[#6f7580] p-2 rounded-md mt-4 font-bold text-sm 
+      className="relative w-full h-full max-h-[46] bg-[#d8dbe3] text-[#6f7580] p-2 rounded-md mt-4 font-bold text-sm 
       hover:bg-[#0B99FF] hover:text-white active:bg-[#0B99FF] active:text-white flex justify-center items-center"
       disabled={loading} // Désactive le bouton pendant le chargement
     >
       {loading ? (
         <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       ) : (
-        "Se connecter"
+        "S’inscrire"
       )}
     </button>
 
@@ -152,7 +255,7 @@ export default function Login() {
 </div>
 
 <p
-  className=" text-center sm:mt-[-40]"
+  className=" text-center sm:mt-[-10]"
   style={{
     width: '409.3px',
     height: '60px',
@@ -167,14 +270,19 @@ export default function Login() {
     textAlign: 'center',
   }}
 >
-  <span>En continuant, vous confirmez votre accord avec les termes <br />du contrat de confidentialité et des règles d'utilisation, et<br />vous autorisez leur application.</span>
+<span>
+  En continuant, vous confirmez votre accord avec <a href="#" className="text-[#0B99FF]">les termes <br />contrat de confidentialité</a> 
+  et des <a href="#" className="text-[#0B99FF]">règles d'utilisation</a>, et<br />
+  vous autorisez leur application.
+</span>
+
 
 </p>
 
 
 {/* Lien pour créer un compte */}
 <p
-  className="mt-12 text-center mt-[-1]"
+  className="mt-12 text-center mt-[-23]"
   style={{
     width: '358px',
     height: '20px',
@@ -196,7 +304,7 @@ export default function Login() {
       textDecorationThickness: '0%',
     }}
   >
-    Pas encore de compte ? Créez votre nouveau compte
+    Déjà un compte ? Connectez-vous
   </a>
 </p>
 

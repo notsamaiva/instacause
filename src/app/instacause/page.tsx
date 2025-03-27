@@ -913,13 +913,13 @@ export default function Header() {
       />
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
                 <div>
-                    <img src="/Instacard.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
+                    <img src="/logo.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
                     <p className="text-white text-sm">Chaque image a une histoire <br /> à raconter...</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-[70px] mt-6 md:mt-0">
                     <div>
                         <h3 className="text-white font-semibold">Liens utiles</h3>
-                        <div className="flex flex-col space-y-1 mt-2 text-sm">
+                        <div className="flex flex-col space-y-3 mt-2 text-sm">
                             <a href="#" className="hover:text-gray-400">Fonctionnalités cles</a>
                             <a href="#comment-ca-marche" name="comment-ca-marche" className="hover:text-gray-400">Comment ça marche</a>
 
@@ -930,69 +930,86 @@ export default function Header() {
                             <a href="#" className="hover:text-gray-400">Paramètres de cookies</a>
                         </div>
                     </div>
+                  
                     <div>
                         <h3 className="text-white font-semibold">À propos</h3>
-                        <div className="flex flex-col space-y-1 mt-2 text-sm">
-                            <a href="#" className="hover:text-gray-400">Figma to Framer</a>
-                            <a href="#" className="hover:text-gray-400">HTML to Framer</a>
-                            <a href="#" className="hover:text-gray-400">Developers</a>
-                            <a href="#" className="hover:text-gray-400">Startup kit</a>
-                            <a href="#" className="hover:text-gray-400">SaaS kit</a>
+                        <div className="flex flex-col space-y-3 mt-2 text-sm">
+                            <a href="#" className="hover:text-gray-400">Notre mission</a>
+                            <a href="#" className="hover:text-gray-400">Notre équipe</a>
+                            <a href="#" className="hover:text-gray-400">Contactez-nous</a>
+                            <a href="#" className="hover:text-gray-400">Devenir partenaire</a>
+                            <a href="#" className="hover:text-gray-400">FAQ</a>
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-white font-semibold">Company</h3>
-                        <div className="flex flex-col space-y-1 mt-2 text-sm">
-                            <a href="#" className="hover:text-gray-400">Careers</a>
-                            <a href="#" className="hover:text-gray-400">Events</a>
-                            <a href="#" className="hover:text-gray-400">Status</a>
-                            <a href="#" className="hover:text-gray-400">Security</a>
-                            <a href="#" className="hover:text-gray-400">Privacy</a>
+                        <h3 className="text-white font-semibold">Mon compte</h3>
+                        <div className="flex flex-col space-y-3 mt-2 text-sm">
+                            <a href="#" className="hover:text-gray-400">Connexion/Inscription</a>
+                            {/* Bouton Langue */}
+                              
+                              <div id="lang-menu" className="relative">
+                                <button
+                                  onClick={toggleLangDropdown}
+                                  className="text-[#292723] mt-[10] rounded-[9px] bg-[#FFFFFF] h-[35px] w-[140px]  flex justify-center items-center gap-2"
+                                >
+                                  <span className="flex items-center space-x-2">
+                                    
+                                    <span>Français</span>
+                                    <img src="/flag-france.svg" alt="Français" className="w-5 h-5" />
+                                  </span>
+                                  {isLangOpen ? <FaChevronUp /> : <FaChevronDown />}
+                                </button>
+
+                                {/* Menu Langues */}
+                                {isLangOpen && (
+                                  <div className="absolute left-0 mt-2 w-[160px] bg-white shadow-lg rounded-md p-2 z-50">
+                                    {languages.map((lang, index) => (
+                                    <button
+                                    key={index}
+                                    className="flex items-center text-[#292723] w-full px-4 py-2 hover:bg-gray-100"
+                                    onClick={() => {
+                                      console.log(`Langue sélectionnée : ${lang.name}`);
+                                      setIsLangOpen(false);
+                                    }}
+                                  >
+                                    {lang.name}
+                                    <img src={lang.flag} alt={lang.name} className="w-5 h-5 ml-2" />
+                                  </button>
+                                  
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                       
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-white font-semibold">Legal</h3>
-                        <div className="flex flex-col space-y-1 mt-2 text-sm">
-                            <a href="#" className="hover:text-gray-400">Abuse</a>
-                            <a href="#" className="hover:text-gray-400">Charges</a>
-                            <a href="#" className="hover:text-gray-400">Cookies</a>
-                            <a href="#" className="hover:text-gray-400">Terms</a>
+                        <h3 className="text-white font-semibold">Paiement sécurisé</h3>
+                        <div className="flex flex-col h-full">
+
+                        
+                        {/* Contenu supérieur */}
+                        <div className="mt-2">
+                          <a href="#"><img src="/payment-methods 1.svg"alt="Icon"className="cursor-pointer hover:text-gray-400 w-[132px] h-[43px]"/></a>
                         </div>
+                        
+                        {/* DECALE en bas  */}
+                        <div className="mt-[63] flex flex-col items-center">
+                          <a href="#" className="text-white font-semibold">Suivez-nous</a>
+                          <div className="flex justify-center space-x-5 text-lg mt-2">
+                            <a href="#"><img src="/icon1.svg"alt="Icon"className="cursor-pointer hover:text-gray-400 w-6 h-6"/></a>
+                            <a href="#"><img src="/icon2.svg"alt="Icon"className="cursor-pointer hover:text-gray-400 w-6 h-6"/></a>
+                            <a href="#"><img src="/icon3.svg"alt="Icon"className="cursor-pointer hover:text-gray-400 w-6 h-6"/></a>
+                            <a href="#"><img src="/icon4.svg"alt="Icon"className="cursor-pointer hover:text-gray-400 w-6 h-6"/></a>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                    
                 </div>
             </div>
-            <div className="flex justify-start ml-[730px] mt-8 space-x-10 text-lg">
-
-              <a href="#">
-                    <img
-                        src="/icon1.svg"
-                        alt="Icon"
-                        className="cursor-pointer hover:text-gray-400 w-6 h-6"
-                    />
-                </a>
-                <a href="#">
-                    <img
-                        src="/icon2.svg"
-                        alt="Icon"
-                        className="cursor-pointer hover:text-gray-400 w-6 h-6"
-                    />
-                </a>
-                <a href="#">
-                    <img
-                        src="/icon3.svg"
-                        alt="Icon"
-                        className="cursor-pointer hover:text-gray-400 w-6 h-6"
-                    />
-                </a>
-                <a href="#">
-                    <img
-                        src="/icon4.svg"
-                        alt="Icon"
-                        className="cursor-pointer hover:text-gray-400 w-6 h-6"
-                    />
-                </a>
-            </div>
+            
         </footer>
 
    

@@ -17,6 +17,28 @@
 }
 
 body {
+  
+
+  /* Style du menu déroulant */
+select {
+  appearance: none; /* Supprime le style natif du select */
+  background-color: white;
+  cursor: pointer;
+}
+
+/* Style des options */
+select option {
+  background-color: white;
+  color: black;
+}
+
+/* Appliquer un effet de survol */
+select option:hover,
+select option:focus {
+  background-color: #0B99FF !important;
+  color: white !important;
+}
+
   color: var(--foreground);
   background: var(--background);
   font-family: "Lufga", sans-serif;/* Appliquer la police à tout le projet */
