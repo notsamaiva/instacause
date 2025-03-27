@@ -818,7 +818,7 @@ export default function Header() {
             <div className="max-w-[1232px] max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
                 <div>
                     <img src="/Instacard.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
-                    <p className="text-white text-sm">Slogan Instacard</p>
+                    <p className="text-white text-sm">Chaque image a une histoire <br /> à raconter...</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-[70px] mt-6 md:mt-0">
                     <div>

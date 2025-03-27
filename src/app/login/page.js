@@ -1,11 +1,24 @@
+"use client"; // Rend le composant client-side
+
 import Image from "next/image";
 import { FaGoogle } from "react-icons/fa";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 export default function Login() {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    // Simuler une action asynchrone (ex: API login)
+    setTimeout(() => {
+      setLoading(false);
+      alert("Connexion réussie !");
+    }, 2000);
+  };
   return (
     <div className="flex min-h-screen overflow-hidden">
    {/* Partie gauche : Formulaire */}
-   <div className="w-full md:w-[458px] h-auto md:h-[686.75px] mt-10 md:mt-[10px] flex flex-col justify-center items-center p-6 md:p-10 gap-6 md:gap-[53px]">
+   <div className="w-full md:w-[458px] h-auto md:h-[686.75px] mt-10 md:mt-[10px] ml-4 md:ml-10 flex flex-col justify-center items-center p-6 md:p-10 gap-6 md:gap-[53px]">
 
       {/* Titres */}
       <div className="w-[458px] h-auto gap-[38px] flex flex-col items-center justify-center">
@@ -24,7 +37,7 @@ export default function Login() {
 </div>
 
 {/* Formulaire */}
-<div className="mt-6 w-80 mt-[-30]">
+<div className="mt-4 w-80 sm:mt-[-10]">
   {/* Champ Email */}
   <input
     type="email"
@@ -139,7 +152,7 @@ export default function Login() {
 </div>
 
 <p
-  className=" text-center mt-[-40]"
+  className=" text-center sm:mt-[-40]"
   style={{
     width: '409.3px',
     height: '60px',
@@ -192,7 +205,7 @@ export default function Login() {
 
       {/* Partie droite : Image + Texte */}
       <div 
-  className="w-[792px] h-[710px] top-[-7px] left-[-1px] ml-[100px] rounded-[32px] bg-[#040108] text-white flex flex-col justify-center items-center relative p-6 border-[18px] border-white"
+  className="w-[792px] h-[710px] top-[-7px] left-[-1px] ml-[50px] rounded-[32px] bg-[#040108] text-white flex flex-col justify-center items-center relative p-6 border-[18px] border-white"
 >
 <div className="relative w-[84px] h-[-880px] left-[-80px] top-[-30px]">
 <div className="relative w-[334px] h-[380px] top-[50px] mx-auto bg-[#a12b2e] border-2 border-white rounded-[30px] p-6">
@@ -214,7 +227,7 @@ export default function Login() {
 </div>
 
 {/* Grand conteneur avec plus de marge en haut */}
-<div className="w-[694px] h-[278px] top-[414.52px] left-[49px] flex flex-col gap-[46px] mt-[-63] mx-auto">
+<div className="w-[694px] h-[278px] mt-[13] left-[49px] flex flex-col gap-[46px] mt-[-63] mx-auto">
   {/* Grand titre */}
   <h2 
     className="w-[703.57px] mt-[123] h-[116px] font-[Lufga] font-semibold text-[20px] leading-[145%] tracking-[-0.09px] text-white text-center flex items-center justify-center mx-auto mt-[61]"
