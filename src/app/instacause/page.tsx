@@ -45,27 +45,63 @@ const postes = [
 ];
 const reviews = [
   {
-    text: "J'avais envie de faire un don, mais avec InstaCause, j'ai pu envoyer un message personnel à la personne aidée. Ça change tout ! Une plateforme humaine et simple.",
-    name: "Name",
-    time: "Il y a 10 mois",
+    text: "J'ai utilisé InstaCause pour soutenir une association qui aide les enfants malades. Recevoir une carte de soutien a énormément touché les bénéficiaires. Une magnifique initiative !",
+    name: "Marie L.",
+    time: "Paris, France",
     image: "/carte.svg"
   },
   {
     text: "J'avais envie de faire un don, mais avec InstaCause, j'ai pu envoyer un message personnel à la personne aidée. Ça change tout ! Une plateforme humaine et simple.",
-    name: "Name",
-    time: "Il y a 8 mois",
+    name: "Thomas R.",
+    time: "Lyon, France",
     image: "/carte.svg"
   },
   {
-    text: "J'avais envie de faire un don, mais avec InstaCause, j'ai pu envoyer un message personnel à la personne aidée. Ça change tout ! Une plateforme humaine et simple.",
-    name: "Name",
-    time: "Il y a 10 mois",
+    text: "Créer ma propre campagne a été un jeu d’enfant. Grâce à InstaCause, j’ai mobilisé mes amis pour aider une famille en difficulté. Résultat : plus de 200 cartes envoyées !",
+    name: "Fatima K.",
+    time: "Bruxelles, Belgique",
     image: "/carte.svg"
   },
   {
-    text: "J'avais envie de faire un don, mais avec InstaCause, j'ai pu envoyer un message personnel à la personne aidée. Ça change tout ! Une plateforme humaine et simple.",   
-    name: "Name",
-    time: "Il y a 10 mois",
+    text: "Ce qui m'a convaincu, c'est l'impact direct. On voit à qui on écrit, on sait où va l'argent. C’est 100 % transparent !",   
+    name: "Kevin D.",
+    time: "Montréal, Canada",
+    image: "/carte.svg"
+  },
+  {
+    text: "Je n'avais jamais vu une plateforme qui permet d’envoyer du soutien moral ET d’aider financièrement en même temps. InstaCause est une révolution solidaire.",   
+    name: "Amina T.",
+    time: "Dakar, Sénégal",
+    image: "/carte.svg"
+  },
+  {
+    text: "J’ai reçu une carte InstaCause lors d’une période difficile. Ce petit mot d’encouragement m’a redonné de l’espoir. J’ai décidé ensuite d’envoyer moi-même des cartes à d’autres !",   
+    name: " Lucas J.",
+    time: "Marseille, France",
+    image: "/carte.svg"
+  },
+  {
+    text: "En tant qu'association, nous avons pu collecter des fonds tout en créant du lien avec nos donateurs. Une approche innovante et bien pensée.",   
+    name: " Sophie B.",
+    time: "Genève, Suisse",
+    image: "/carte.svg"
+  },
+  {
+    text: "Le fait de pouvoir envoyer une carte et participer à une bonne action en même temps est une superbe idée ! J’envoie une carte chaque mois maintenant.",   
+    name: " Mohammed E.",
+    time: "Casablanca, Maroc",
+    image: "/carte.svg"
+  },
+  {
+    text: "Je voulais aider une amie en difficulté, mais je ne savais pas comment. InstaCause m’a permis de lui envoyer du soutien de façon concrète.",   
+    name: "  Julie V.",
+    time: "Toulouse, France",
+    image: "/carte.svg"
+  },
+  {
+    text: "J’ai découvert InstaCause par hasard, et depuis, je l’utilise régulièrement. Le processus est fluide, rapide et surtout impactant. Bravo à l’équipe !",   
+    name: " David S.",
+    time: " Berlin, Allemagne",
     image: "/carte.svg"
   }
 ];
@@ -168,6 +204,35 @@ export default function Header() {
       answer: "📌 Vous pouvez nous écrire via le formulaire de contact ou par email à cause@insta-card.com.",
     },
   ];
+
+ 
+  const [itemsPerView, setItemsPerView] = useState(3); // Par défaut : 3 cartes visibles (desktop)
+
+  useEffect(() => {
+    // Détecter la taille de l'écran pour ajuster le nombre d'éléments visibles
+    const updateItemsPerView = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerView(1); // Mobile : 1 carte
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2); // Tablette : 2 cartes
+      } else {
+        setItemsPerView(3); // Desktop : 3 cartes
+      }
+    };
+
+    updateItemsPerView(); // Appliquer immédiatement
+    window.addEventListener("resize", updateItemsPerView);
+
+    return () => window.removeEventListener("resize", updateItemsPerView);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+    }, 3000); // Change toutes les 3 secondes
+
+    return () => clearInterval(interval);
+  }, [reviews.length]);
   return (
     
 <div className="overflow-hidden bg-gradient-to-b from-[#E7F9FF] to-[#FAF9F7] w-full min-h-screen">
@@ -323,8 +388,63 @@ export default function Header() {
   </div>
 </div>
 
+<div className="flex justify-center items-center min-h-screen p-4">
+  <div className="w-full max-w-[1234px] grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    {/* Card 1 */}
+    <div className="flex items-center bg-[#A8FFC266] rounded-[15px] p-4 gap-6">
+      <img src="/g8.svg" alt="Agrandir" className="w-[120px] h-[120px] md:w-[170px] md:h-[170px]" />
+      <div className="flex flex-col">
+        <h3 className="text-[#000] font-semibold text-[20px] md:text-[24px] leading-[24px]">
+          Un message qui a du sens
+        </h3>
+        <p className="text-[#000] font-normal mt-[30] text-[16px] md:text-[18px] leading-[150%]">
+          Envoyez une carte postale pour <br />exprimer votre soutien, votre <br />gratitude ou votre solidarité.
+        </p>
+      </div>
+    </div>
 
+    {/* Card 2 */}
+    <div className="flex items-center bg-[#E6E4FF] rounded-[15px] p-4 gap-6">
+      <img src="/g8g.svg" alt="Agrandir" className="w-[120px] h-[120px] md:w-[170px] md:h-[170px]" />
+      <div className="flex flex-col">
+        <h3 className="text-[#000] font-semibold text-[20px] md:text-[24px] leading-[24px]">
+        Un impact réel
+        </h3>
+        <p className="text-[#000] font-normal mt-[30] text-[16px] md:text-[18px] leading-[150%]">
+        Une partie du prix de chaque <br />carte postale est directement <br />reversée à la cause choisie.
+        </p>
+      </div>
+    </div>
 
+    {/* Card 3 */}
+    <div className="flex items-center bg-[#C0E5FF] rounded-[15px] p-4 gap-6">
+      <img src="/amico.svg" alt="Agrandir" className="w-[120px] h-[120px] md:w-[170px] md:h-[170px]" />
+      <div className="flex flex-col">
+        <h3 className="text-[#000] font-semibold text-[20px] md:text-[24px] leading-[24px]">
+        Des campagnes pour tous
+        </h3>
+        <p className="text-[#000] font-normal mt-[30] text-[16px] md:text-[18px] leading-[150%]">
+        Créez votre propre campagne et <br />mobilisez votre entourage en <br />quelques minutes.
+        </p>
+      </div>
+    </div>
+
+    {/* Card 4 */}
+    <div className="flex items-center bg-[#FFDDC7] rounded-[15px] p-4 gap-6">
+      <img src="/bro.svg" alt="Agrandir" className="w-[120px] h-[120px] md:w-[170px] md:h-[170px]" />
+      <div className="flex flex-col">
+        <h3 className="text-[#000] font-semibold text-[20px] md:text-[24px] leading-[24px]">
+        Simple, rapide et efficace
+        </h3>
+        <p className="text-[#000] font-normal mt-[30] text-[16px] md:text-[18px] leading-[150%]">
+        Choisissez une cause, <br />personnalisez votre carte, et nous <br /> l’envoyons pour vous.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
     
        {/* Comment ça marche */}
@@ -458,7 +578,7 @@ export default function Header() {
     <img
       src="/backdegrade.svg"
       alt="Dégradé"
-      className="overflow-hidden absolute top-[-224px] left-2/3 transform -translate-x-2/3 w-full max-w-[1676px]  max-h-[1302px]"
+      className="overflow-hidden absolute md:top-[-224px] left-2/3 transform -translate-x-2/3 w-full max-w-[1676px]  max-h-[1302px]"
     />
  
  <p className="text-[20px] sm:text-[25px] font-semibold text-[#000000]">
@@ -490,51 +610,52 @@ export default function Header() {
       </p>
       
       <div className="relative flex items-center justify-center mt-10">
- {/* Bouton gauche */}
 
-        
-        <div className="flex gap-6 w-full justify-center transition-transform duration-700" style={{ transform: `translateX(-${currentIndex * 33.3}%)` }}>
-        {reviews.map((review, index) => (
-            <div key={index} className="w-full">
-              <div
-                className={`relative w-[400px] h-[329px]  border border-gray-300 bg-white shadow-xl rounded-2xl p-6 flex flex-col justify-between transition-transform duration-300
-                ${index % 2 === 0 ? 'rotate-6' : '-rotate-3'} hover:rotate-0 hover:scale-105`}
-              >
-                {/* Texte du review */}
-                <p className="text-gray-700 italic text-left">{review.text}</p>
-        
-                {/* Contenu en bas */}
-                <div className="absolute bottom-0 left-0 w-full px-6 pb-6">
-                  <hr className="w-full border border-gray-300 my-2" />
-        
-                  {/* Infos utilisateur + étoiles */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={review.image}
-                        alt="user"
-                        width={40}
-                        height={40}
-                        className="rounded-full object-cover"
-                      />
-                      <div className="flex flex-col">
-                        <p className="font-bold text-left">{review.name}</p>
-                        <p className="text-gray-500 text-sm">{review.time}</p>
-                      </div>
+      <div
+        className="flex gap-6 w-full transition-transform duration-700 ease-in-out"
+        style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }}
+      >
+        {reviews.concat(reviews).map((review, index) => (
+          <div key={index} className="w-full flex-shrink-0" style={{ flex: `0 0 ${100 / itemsPerView}%` }}>
+            <div
+              className={`relative w-[90%] mx-auto max-w-[400px] h-[329px] border border-gray-300 bg-white shadow-xl rounded-2xl p-6 flex flex-col justify-between transition-transform duration-300
+                ${index % 2 === 0 ? "rotate-6" : "-rotate-3"} hover:rotate-0 hover:scale-105`}
+            >
+              {/* Texte du review */}
+              <p className="text-gray-700 italic text-left">{review.text}</p>
+
+              {/* Contenu en bas */}
+              <div className="absolute bottom-0 left-0 w-full px-6 pb-6">
+                <hr className="w-full border border-gray-300 my-2" />
+
+                {/* Infos utilisateur + étoiles */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Image
+                      src={review.image}
+                      alt="user"
+                      width={40}
+                      height={40}
+                      className="rounded-full object-cover"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold text-left">{review.name}</p>
+                      <p className="text-gray-500 text-sm">{review.time}</p>
                     </div>
-        
-                    {/* Étoiles */}
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <StarIcon key={i} />
-                      ))}
-                    </div>
+                  </div>
+
+                  {/* Étoiles */}
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <span key={i} className="text-yellow-500">⭐</span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
         <button onClick={prevSlide} className="absolute" style={{ top: "316.03px", right: "226px", width: "420px", height: "398px" }}>
   <Image
     src="/strollgauche.svg"
@@ -576,72 +697,75 @@ export default function Header() {
     </div>
 
 
-
-{/* les question */}
-<div className="relative max-w-[1232px] mt-[83] flex flex-col md:flex-row w-full justify-between bg-[#FAF9F7] mb-[50px] pb-[80px]  ">
-  <Image
+     <div className="relative flex flex-col mt-[80] md:flex-row w-full justify-between bg-[#FAF9F7] mb-12 pb-20">
+    {/* Image de fond */}
+    <Image
       src="/backb.svg"
       alt="decoration"
       width={800}
       height={800}
-      className="absolute top-0 left-0 w-[80%] md:w-[1200px] h-auto"
+      className="absolute top-0 left-0 hidden sm:block w-[80%] md:w-[800px] h-auto"
       priority
     />
-                    <div className="md:w-1/2 space-y-4 px-6 md:px-10 pt-[50px] md:pt-[100px]">
-                      
-                        <div className="absolute items-center mt-[4px] sm:items-start p-2 sm:p-6 sm:space-x-1">
-                        <h2 className="text-[#FF5DD9] text-left uppercase font-bold text-[14px]  leading-none tracking-normal drop-shadow-[0px_4px_18px_#FF5DD9]">
-                          FAQ
-                        </h2>
-                        
-                        <h2 className="text-2xl mt-[34px] md:text-3xl font-bold text-gray-900">Questions posées par les utilisateurs <br />sur Instacard.</h2>
-                        <p className="text-gray-600 mt-[14px] text-sm md:text-base">Des milliers de personnes ont envoyé avec succès des <br /> milliers de carte postale a travers le monde et vous ?</p>
-                            
-                            <div className="space-y-2 w-full mt-[34px]  sm:w-[500px]">
-                         
-                            <div>
-                              {faqs.map((faq, index) => (
-                                <div key={index} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm mb-4">
-                                  <button
-                                    className="w-full text-left px-4 py-3 flex justify-between items-center text-sm md:text-lg font-medium text-gray-800 bg-white hover:bg-gray-100"
-                                    onClick={() => toggle(index)}
-                                  >
-                                    <p className="text-[12px] sm:text-[13px] md:text-[14px]">{faq.question}</p>
-                                    {open === index ? (
-                                      <FaChevronUp className="text-16 md:text-[16] text-[#6F7580]" />
-                                    ) : (
-                                      <FaChevronDown className="text-16 md:text-[16] text-[#6F7580]" />
-                                    )}
-                                  </button>
-                                  {open === index && (
-                                    <div className="px-4 py-3 text-sm text-gray-700 bg-gray-50">
-                                      {faq.answer}
-                                    </div>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
+  
+    {/* Contenu texte */}
+    <div className="md:w-1/2 space-y-6 px-4 sm:px-8 md:px-12 pt-12 md:pt-24 text-center md:text-left">
+      <h2 className="text-[#FF5DD9] uppercase font-bold text-sm sm:text-base tracking-wide drop-shadow-md">
+        FAQ
+      </h2>
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+        Questions posées par les utilisateurs <br className="hidden sm:block" />
+        sur Instacard.
+      </h2>
+      <p className="text-gray-600 text-sm sm:text-base">
+        Des milliers de personnes ont envoyé avec succès des cartes postales à travers le monde, et vous ?
+      </p>
+  
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="md:w-1/2 flex justify-center items-start relative p-4 md:p-0">
-      {/* Image principale */}
-      <Image
-        src="/userr.svg"
-        alt="Image utilisateur heureux"
-        width={648}
-        height={805}
-        className="rounded-lg w-full max-w-[648px] h-auto"
-      />
-    </div>     
+      {/* Liste des questions */}
+      <div className="space-y-2 w-full mt-6 sm:w-[500px]">
+        {faqs.map((faq, index) => (
+          <div key={index} className="border border-gray-200 rounded-lg shadow-sm">
+            <button
+              className="w-full text-left px-4 py-3 flex justify-between items-center text-sm md:text-lg font-medium text-gray-800 bg-white hover:bg-gray-100"
+              onClick={() => toggle(index)}
+            >
+              <p className="text-[12px] sm:text-[13px] md:text-[14px]">{faq.question}</p>
+              {open === index ? (
+                <FaChevronUp className="text-16 md:text-[16] text-[#6F7580]" />
+              ) : (
+                <FaChevronDown className="text-16 md:text-[16] text-[#6F7580]" />
+              )}
+            </button>
+            {open === index && (
+              <div className="px-4 py-3 text-sm text-gray-700 bg-gray-50">
+                {faq.answer}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
 
 
+  {/* Image principale */}
+  <div className="md:w-1/2 flex justify-center items-center relative mt-10 md:mt-0">
+    <Image
+      src="/userr.svg"
+      alt="Image utilisateur heureux"
+      width={648}
+      height={805}
+      className="rounded-lg w-full max-w-[648px] h-auto object-cover"
+    />
+  </div>
+</div>
 
 
 
-    <div className="max-w-[1232px] flex flex-col items-center mt-[240px] mb-[60px] mx-auto">
+
+
+
+    <div className="max-w-[1232px] flex flex-col items-center md:mt-[-30px] mb-[60px] mx-auto">
                     <header className="text-center py-8">
                     <h2 className="text-[#3CE481CC] text-center uppercase font-bold text-[14px] leading-none tracking-normal drop-shadow-[0px_4px_18px_#3CE481CC]">
                         TELECHARGER
