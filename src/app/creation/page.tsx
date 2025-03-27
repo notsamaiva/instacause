@@ -1,44 +1,27 @@
 "use client"; // Indique à Next.js que c'est un composant client
 
-
-import { FaImages, FaPaintBrush, FaSearch, FaBars, FaTimes } from 'react-icons/fa';
-import Link from 'next/link';
-import { useState, useEffect } from "react";
-import Image from 'next/image';
 import { XCircle } from "lucide-react";
 
 export default function Header() {
-  
-
   return (
-    
+    <main className="w-full pt-12 min-h-screen bg-gradient-to-b from-[#FAF9F7] to-[#FAF9F7]">
+      <div className="w-full md:w-[974px] min-h-[774px] mx-auto mt-12 shadow-lg bg-white rounded-2xl flex flex-col">
+        {/* Header */}
+        <header className="w-full h-20 bg-[#007AFF] text-white flex justify-between items-center px-4 rounded-t-2xl">
+          <h1 className="text-lg font-semibold">Validation de votre carte</h1>
+          <div className="w-8 h-8 flex items-center justify-center rounded-full cursor-pointer">
+            <XCircle size={24} strokeWidth={2} />
+          </div>
+        </header>
 
-<main className="w-full pt-[50px] min-h-screen bg-gradient-to-b from-[#FAF9F7] to-[#FAF9F7]">
-
-    <div className="w-[974px] min-h-[774px] mx-auto mt-[112px] shadow-lg bg-white rounded-2xl flex flex-col">
-      
-       
-      {/* Header */}
-      <header className="w-full h-[77px] bg-[#007AFF] text-white flex justify-between items-center px-4 rounded-t-2xl">
-        <h1 className="text-[18px] text-[#FFFFFF] font-semibold">Validation de votre carte</h1>
-        
-        {/* Close Icon */}
-        <div className="w-[32px] h-[32px] flex items-center justify-center rounded-full cursor-pointer">
-          <XCircle size={24} strokeWidth={2} />
-        </div>
-      </header>
-
-      {/* Contenu principal */}
-      <div className="flex justify-center items-center flex flex-1 p-4 gap-5">
-      
-       {/* div1 */}
-       <div className="w-[393px]">
-      {/* Titre */}
-      <h2 className="font-[Lufga] font-semibold text-[24px] mt-[24] leading-[24px] tracking-[-0.5px] text-[#1B2029]">
-        Confirmer votre commande
-      </h2>
-
-      {/* Sous-div avec Destinataire et Ajouter un destinataire */}
+        {/* Contenu principal */}
+        <div className="flex flex-col md:flex-row justify-center items-center flex-1 p-4 gap-5">
+          {/* Div 1 */}
+          <div className="w-full md:w-[393px]">
+            <h2 className="font-Lufga font-semibold text-2xl mt-6 leading-6 tracking-[-0.5px] text-[#1B2029]">
+              Confirmer votre commande
+            </h2>
+              {/* Sous-div avec Destinataire et Ajouter un destinataire */}
       <div className="w-full h-[132px] flex justify-between items-center mt-[-24]">
         <span className="text-[#292723]">Destinataire (1)</span>
         <button className="text-[#0B99FF] font-medium">Ajouter un destinataire</button>
@@ -94,20 +77,17 @@ export default function Header() {
           </div>
         ))}
       </div>
-    </div>
+          </div>
 
-    
-        {/* Divider */}
-        <div className="w-[2px] h-[548.2px] bg-[#D8DBE3]"></div>
+          {/* Divider */}
+          <div className="hidden md:block w-px h-[548px] bg-[#D8DBE3]"></div>
 
-       {/* Div2 */}
-<div className="w-[393px] h-[553px] flex flex-col gap-5">
-  
-  <h2 className="font-[Lufga] font-semibold text-[18px] mt-[14px] leading-[24px] tracking-[-0.5px] text-[#1B2029]">
-    Aperçu de votre création
-  </h2>
-
-  {/* Sous div 1 */}
+          {/* Div 2 */}
+          <div className="w-full md:w-[393px] flex flex-col gap-5">
+            <h2 className="font-Lufga font-semibold text-lg mt-4 leading-6 tracking-[-0.5px] text-[#1B2029]">
+              Aperçu de votre création
+            </h2>
+             {/* Sous div 1 */}
   <div 
     className="w-[393px] h-[222px] border-[12px] border-[#FFFFF5] rounded-[12px]" 
     style={{
@@ -190,38 +170,25 @@ export default function Header() {
 </button>
 
 
-</div>
 
-
-
-
-      </div>
-
-      {/* Footer avec pagination à gauche et bouton à droite */}
-      <footer className="w-full h-[80px] bg-[#E9ECF2] flex justify-between items-center px-4 rounded-b-2xl">
-        
-        {/* Pagination à gauche */}
-        <div className="flex gap-3">
-          <div className="w-[24px] h-[24px] bg-[#1092ED] text-white text-[12px] font-bold flex items-center justify-center rounded-full">
-            1
-          </div>
-          <div className="w-[24px] h-[24px] border border-[#1092ED] text-[#1092ED] text-[12px] font-bold flex items-center justify-center rounded-full">
-            2
           </div>
         </div>
 
-        {/* Bouton "Envoyer ma carte" à droite */}
-        <button className="bg-[#007AFF] text-[#FEFEFE] px-6 py-3 rounded-lg text-sm font-medium">
-          Envoyer ma carte
-        </button>
-
-      </footer>
-    </div>
-
-
-
-</main>
-
-  
+        {/* Footer */}
+        <footer className="w-full h-20 bg-[#E9ECF2] flex justify-between items-center px-4 rounded-b-2xl">
+          <div className="flex gap-3">
+            <div className="w-6 h-6 bg-[#1092ED] text-white text-sm font-bold flex items-center justify-center rounded-full">
+              1
+            </div>
+            <div className="w-6 h-6 border border-[#1092ED] text-[#1092ED] text-sm font-bold flex items-center justify-center rounded-full">
+              2
+            </div>
+          </div>
+          <button className="bg-[#007AFF] text-[#FEFEFE] px-6 py-3 rounded-lg text-sm font-medium">
+            Envoyer ma carte
+          </button>
+        </footer>
+      </div>
+    </main>
   );
 }
