@@ -276,131 +276,130 @@ export default function Header() {
         Livraison offerte à partir de 90€ d'achat avec le code* <strong>ENVOI</strong>
       </div>
       <nav className="bg-[#E7F9FF]">
-      <div className="container max-w-screen-xl mx-auto px-6 flex flex-wrap items-center justify-between h-[60px] mt-2">
-        {/* Logo */}
-        <div className="text-2xl font-bold text-[#0B99FF]">
-          <a href="/">
-            <img src="/logo.svg" alt="logo" className="w-[48px] h-[47px]" />
-          </a>
-        </div>
+  <div className="container max-w-screen-xl mx-auto px-6 flex flex-wrap items-center justify-between h-[60px] mt-2">
+    {/* Logo */}
+    <div className="text-2xl font-bold text-[#0B99FF]">
+      <a href="/">
+        <img src="/logo.svg" alt="logo" className="w-[48px] h-[47px]" />
+      </a>
+    </div>
 
-        {/* Icône menu burger sur mobile */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)}>
-            <FaBars className="text-2xl text-[#0B99FF]" />
-          </button>
-        </div>
+    {/* Icône menu burger sur mobile */}
+    <div className="md:hidden">
+      <button onClick={() => setIsOpen(!isOpen)}>
+        <FaBars className="text-2xl text-[#0B99FF]" />
+      </button>
+    </div>
 
-         {/* Menu Desktop */}
-      <div id="nav-menu" className="hidden md:flex space-x-[40px] items-center">
-        {[
-          { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
-          { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
-          { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
-        ].map((menu, index) => (
-          <div key={index} className="relative group">
-            <button
-              onClick={() => toggleDropdown(menu.label)}
-              className="hover:text-[#0B99FF] flex items-center gap-2"
-            >
-              {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
-            </button>
-            {openDropdown === menu.label && (
-              <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 z-50">
-                {menu.links.map((link, i) => (
-                  <a key={i} href="#" className="font-bold block px-4 py-2 hover:bg-gray-100">
-                    {link}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Bouton Langue */}
-        <div id="lang-menu" className="relative">
+    {/* Menu Desktop */}
+    <div id="nav-menu" className="hidden md:flex space-x-[40px] items-center">
+      {[
+        { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
+        { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
+        { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
+      ].map((menu, index) => (
+        <div key={index} className="relative group">
           <button
-            onClick={toggleLangDropdown}
-            className="hover:text-[#0B99FF] rounded-[12px] bg-[#FFFFFF] h-[40px] w-[160px]  flex justify-center items-center gap-2"
+            onClick={() => toggleDropdown(menu.label)}
+            className="hover:text-[#0B99FF] flex items-center gap-2"
           >
-            <span className="flex items-center space-x-2">
-              
-              <span>Français</span>
-              <img src="/flag-france.svg" alt="Français" className="w-5 h-5" />
-            </span>
-            {isLangOpen ? <FaChevronUp /> : <FaChevronDown />}
+            {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
           </button>
-
-          {/* Menu Langues */}
-          {isLangOpen && (
-            <div className="absolute left-0 mt-2 w-[160px] bg-white shadow-lg rounded-md p-2 z-50">
-              {languages.map((lang, index) => (
-               <button
-               key={index}
-               className="flex items-center text-[#292723] w-full px-4 py-2 hover:bg-gray-100"
-               onClick={() => {
-                 console.log(`Langue sélectionnée : ${lang.name}`);
-                 setIsLangOpen(false);
-               }}
-             >
-               {lang.name}
-               <img src={lang.flag} alt={lang.name} className="w-5 h-5 ml-2" />
-             </button>
-             
+          {openDropdown === menu.label && (
+            <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2 z-50">
+              {menu.links.map((link, i) => (
+                <a key={i} href="#" className="font-bold block px-4 py-2 hover:bg-gray-100">
+                  {link}
+                </a>
               ))}
             </div>
           )}
         </div>
-      </div>
-        {/* Boutons */}
-        <div className="hidden md:flex space-x-4 text-xs items-center">
-       
-        <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#000000] text-center">
-        Soutenir une cause
-          </button>
-          <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#0B99FF] text-center">
-            Créer une campagne
-          </button>
-          <button className="text-black px-4 md:px-6 py-2 md:py-3 rounded-[12px] border border-black bg-transparent text-center">
-            Connexion
-          </button>
-        </div>
-      </div>
+      ))}
 
-      {/* Menu Mobile */}
-      {isOpen && (
-        <div className="md:hidden absolute top-[150px] left-0 w-full bg-white shadow-lg z-50">
-          {[
-            { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
-            { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
-            { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
-          ].map((menu, index) => (
-            <div key={index} className="p-4 border-b">
-              <button onClick={() => toggleDropdown(menu.label)} className="w-full text-left flex justify-between items-center">
-                {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
+      {/* Bouton Langue */}
+      <div id="lang-menu" className="relative">
+        <button
+          onClick={toggleLangDropdown}
+          className="hover:text-[#0B99FF] rounded-[12px] bg-[#FFFFFF] h-[40px] w-[160px] flex justify-center items-center gap-2"
+        >
+          <span className="flex items-center space-x-2">
+            <span>Français</span>
+            <img src="/flag-france.svg" alt="Français" className="w-5 h-5" />
+          </span>
+          {isLangOpen ? <FaChevronUp /> : <FaChevronDown />}
+        </button>
+
+        {/* Menu Langues */}
+        {isLangOpen && (
+          <div className="absolute left-0 mt-2 w-[160px] bg-white shadow-lg rounded-md p-2 z-50">
+            {languages.map((lang, index) => (
+              <button
+                key={index}
+                className="flex items-center text-[#292723] w-full px-4 py-2 hover:bg-gray-100"
+                onClick={() => {
+                  console.log(`Langue sélectionnée : ${lang.name}`);
+                  setIsLangOpen(false);
+                }}
+              >
+                {lang.name}
+                <img src={lang.flag} alt={lang.name} className="w-5 h-5 ml-2" />
               </button>
-              {openDropdown === menu.label && (
-                <div className="mt-2 space-y-2">
-                  {menu.links.map((link, i) => (
-                    <a key={i} href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      {link}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-          <div className="p-4">
-            <button className="w-full text-white px-4 py-3 rounded-[12px] bg-[#0B99FF] text-center">
-              Créer une campagne
-            </button>
-            <button className="w-full mt-2 text-black px-4 py-3 rounded-[12px] border border-black bg-transparent text-center">
-              Connexion
-            </button>
+            ))}
           </div>
+        )}
+      </div>
+    </div>
+
+    {/* Boutons */}
+    <div className="hidden md:flex space-x-4 text-xs items-center">
+      <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#000000] text-center">
+        Soutenir une cause
+      </button>
+      <button className="text-white px-4 md:px-6 py-2 md:py-3 rounded-[12px] bg-[#0B99FF] text-center">
+        Créer une campagne
+      </button>
+      <button className="text-black px-4 md:px-6 py-2 md:py-3 rounded-[12px] border border-black bg-transparent text-center">
+        Connexion
+      </button>
+    </div>
+  </div>
+
+  {/* Menu Mobile */}
+  {isOpen && (
+    <div className="md:hidden absolute top-[150px] left-0 w-full bg-white shadow-lg z-50">
+      {[
+        { label: "Accueil", links: ["Fonctionnalités clés", "Comment ça marche", "À propos", "Contact"] },
+        { label: "Liste des causes", links: ["Education", "Humanitaire", "Politique", "Environnement", "Artiste", "Business", "Autres"] },
+        { label: "À propos", links: ["Notre mission", "Notre équipe", "Contactez-nous", "FAQ"] },
+      ].map((menu, index) => (
+        <div key={index} className="p-4 border-b">
+          <button onClick={() => toggleDropdown(menu.label)} className="w-full text-left flex justify-between items-center">
+            {menu.label} {openDropdown === menu.label ? <FaChevronUp /> : <FaChevronDown />}
+          </button>
+          {openDropdown === menu.label && (
+            <div className="mt-2 space-y-2">
+              {menu.links.map((link, i) => (
+                <a key={i} href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  {link}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-    </nav>
+      ))}
+      <div className="p-4">
+        <button className="w-full text-white px-4 py-3 rounded-[12px] bg-[#0B99FF] text-center">
+          Créer une campagne
+        </button>
+        <button className="w-full mt-2 text-black px-4 py-3 rounded-[12px] border border-black bg-transparent text-center">
+          Connexion
+        </button>
+      </div>
+    </div>
+  )}
+</nav>
+
       {/* Home  cause photo */}
       <div className="relative w-full min-h-screen">
   {/* Background Gradient */}
@@ -410,7 +409,7 @@ export default function Header() {
   <div className="relative max-w-[1232px] w-full h-full mx-auto px-4">
     {/* Texte central */}
     <div className="flex flex-col items-center text-center py-5">
-      <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold text-black">
+      <h1 className="text-[32px] md:text-[48px] font-bold text-black">
         Vos cartes postales, un écho pour <br className="hidden md:block" />
         les causes qui comptent.
       </h1>
@@ -422,7 +421,7 @@ export default function Header() {
     </div>
 
     {/* Grille responsive */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-18">
       
       {/* Carte 1 */}
       <div className="bg-[#2D65AF] w-full max-w-[236px] h-[287px] text-white mt-[-80] rounded-[32px] flex flex-col justify-end p-4">
@@ -913,7 +912,7 @@ export default function Header() {
       />
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
                 <div>
-                    <img src="/logo.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
+                    <img src="/logo_blanc.svg" alt="logo instacard" className="w-[90px] h-[30px]" />
                     <p className="text-white text-sm">Chaque image a une histoire <br /> à raconter...</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-[70px] mt-6 md:mt-0">

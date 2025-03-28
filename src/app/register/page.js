@@ -49,7 +49,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen overflow-hidden">
    {/* Partie gauche : Formulaire */}
-   <div className="w-full md:w-[458px] h-auto md:h-[686.75px] mt-10 md:mt-[10px] ml-4 md:ml-10 flex flex-col justify-center items-center p-6 md:p-10 gap-6 md:gap-[53px]">
+   <div className="w-full md:max-w-[458px] h-auto md:h-[686.75px] mt-10 md:mt-[10px] ml-4 md:ml-10 flex flex-col justify-center items-center p-6 md:p-10 gap-6 md:gap-[53px]">
 
       {/* Titres */}
       <div className="w-[458px] h-auto gap-[38px] flex flex-col items-center justify-center">
